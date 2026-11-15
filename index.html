@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Earth Information Jukebox — Hear Our Changing Planet</title>
+  <link rel="stylesheet" href="style.css?v=3" />
+</head>
+<body class="space-backdrop">
+
+  <!-- Skip to Main Content Link for Keyboard & Screen Reader Users -->
+  <a href="#main-content" class="sr-only skip-link">
+    Skip to main content
+  </a>
+
+  <!-- Global Live Screen Reader Announcer (Polite & Assertive) -->
+  <div id="sr-announcer-polite" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+  <div id="sr-announcer-assertive" class="sr-only" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- ========================================================================
+       HEADER & ACCESSIBILITY TOOLBAR
+       ======================================================================== -->
+  <header class="surface-card site-header">
+    <div class="header-inner">
+      <!-- Top Accessibility & Preferences Strip -->
+      <div class="a11y-strip">
+        <div class="a11y-strip__left">
+          <span class="nasa-badge">
+            <span class="nasa-dot" aria-hidden="true"></span>
+            NASA / NOAA Open Earth Data Sonification
+          </span>
+          <span class="keyboard-hint text-muted">
+            Keyboard: <kbd class="surface-sub">Space</kbd> Play/Pause ·
+            <kbd class="surface-sub">←/→</kbd> Scrub
+          </span>
+        </div>
+
+        <!-- Inclusive Design & Display Controls -->
+        <div class="a11y-btn-group" role="group" aria-label="Display and Accessibility Preferences">
+          <button id="btn-theme-toggle" type="button" class="touch-target btn-a11y surface-sub transition" aria-pressed="false" title="Switch between Dark Space and Light Daylight theme">
+            <span id="icon-theme" aria-hidden="true">☀️</span>
+            <span id="label-theme">Light Mode</span>
+          </button>
+          <button id="btn-contrast-toggle" type="button" class="touch-target btn-a11y surface-sub transition" aria-pressed="false" title="Toggle High-Contrast Accessibility Mode">
+            <span aria-hidden="true">◐</span>
+            <span>High Contrast</span>
+          </button>
+          <button id="btn-textsize-toggle" type="button" class="touch-target btn-a11y surface-sub transition" aria-pressed="false" title="Toggle Large Text Display">
+            <span aria-hidden="true">A+</span>
+            <span>Large Text</span>
+          </button>
+          <button id="btn-motion-toggle" type="button" class="touch-target btn-a11y surface-sub transition" aria-pressed="false" title="Toggle Reduced Motion Mode">
+            <span aria-hidden="true">⏸</span>
+            <span>Reduce Motion</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Navigation Bar -->
+      <div class="nav-wrapper">
+        <button type="button" data-nav="home" class="touch-target btn-logo">
+          <!-- Custom Inline SVG Planet + Soundwave Logo -->
+          <div class="logo-icon-wrap">
+            <div class="logo-icon-inner">
+              <svg class="logo-svg" viewBox="0 0 32 32" aria-hidden="true">
+                <circle class="logo-circle" cx="16" cy="16" r="10" />
+                <path class="logo-soundwave" d="M8 16C11 11 14 21 16 16C18 11 21 21 24 16" />
+                <ellipse class="logo-orbit" cx="16" cy="16" rx="14" ry="5" transform="rotate(-22 16 16)" />
+              </svg>
+            </div>
+          </div>
+          <div>
+            <span class="logo-title">
+              Earth Information Jukebox
+            </span>
+            <span class="logo-subtitle text-muted">Multi-Sensory Climate &amp; Earth Science Studio</span>
+          </div>
+        </button>
+
+        <nav aria-label="Primary Navigation" class="primary-nav">
+          <button type="button" data-nav="home" class="nav-btn touch-target" aria-current="page">
+            Home
+          </button>
+          <button type="button" data-nav="explore" class="nav-btn touch-target">
+            Explore Datasets
+          </button>
+          <button type="button" data-nav="player" class="nav-btn touch-target nav-btn--with-dot">
+            <span>Jukebox Player</span>
+            <span id="nav-playing-dot" class="nav-playing-dot hidden" aria-hidden="true"></span>
+          </button>
+          <button type="button" data-nav="compare" class="nav-btn touch-target">
+            Hear the Change (A/B)
+          </button>
+          <button type="button" id="btn-open-tutorial" class="touch-target surface-sub nav-btn-tutorial transition">
+            Tutorial
+          </button>
+          <button type="button" data-nav="about" class="nav-btn touch-target">
+            About &amp; Data
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Browser Support / Audio Status Alert Banner -->
+  <div id="audio-warning-banner" class="hidden audio-warning" role="alert">
+    <div class="warning-inner">
+      <p id="audio-warning-text" class="warning-text"></p>
+      <button id="btn-dismiss-warning" type="button" class="surface-sub warning-dismiss">Dismiss</button>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MAIN SINGLE-PAGE APPLICATION CONTENT AREA
+       ======================================================================== -->
+  <main id="main-content" class="main-content-area">
+
+    <!-- ======================================================================
+         VIEW 1: HOME / LANDING PAGE
+         ====================================================================== -->
+    <section id="view-home" class="view-section view-home" aria-labelledby="home-heading">
+      <div class="hero-card surface-card">
+        <div class="hero-grid">
+          <div class="hero-left">
+            <div class="hero-label" aria-hidden="true">
+              <span aria-hidden="true">🌍</span> Sight + Sound Earth Science
+            </div>
+            <h1 id="home-heading" class="hero-heading">
+              Hear our changing planet through <span class="gradient-text">real NASA &amp; NOAA data</span>.
+            </h1>
+            <p class="hero-desc text-muted">
+              <strong>Earth Information Jukebox</strong> transforms verified climate and Earth observation time-series into real-time, deterministic Web Audio soundscapes paired with synchronized visual charts and spoken transcripts—built so sighted, blind, and low-vision explorers can experience planetary trends together.
+            </p>
+            <div class="hero-btns">
+              <button type="button" id="btn-hero-orchestra" class="touch-target btn-cta-orchestra transition">
+                <span aria-hidden="true">🌐</span>
+                <span>Experience Earth Orchestra</span>
+              </button>
+              <button type="button" data-nav="player" id="btn-hero-play-now" class="touch-target btn-cta-play transition">
+                <span aria-hidden="true">▶</span>
+                <span>Launch Jukebox Player</span>
+              </button>
+              <button type="button" data-nav="explore" class="touch-target btn-cta-secondary surface-sub transition">
+                Explore All Datasets
+              </button>
+              <button type="button" data-nav="compare" class="touch-target btn-cta-ghost surface-sub transition">
+                Compare Eras (A/B)
+              </button>
+            </div>
+          </div>
+
+          <!-- Interactive Mini-Preview Card on Landing -->
+          <div class="hero-preview-col">
+            <div class="preview-card surface-sub">
+              <div class="preview-header">
+                <div>
+                  <span class="preview-title">Quick Sound Preview</span>
+                  <h2 class="preview-heading">Global Warming Trend (1880–2025)</h2>
+                </div>
+                <span class="preview-badge">NASA GISTEMP</span>
+              </div>
+
+              <!-- Animated Mini SVG Sparkline -->
+              <div class="sparkline-wrap">
+                <svg id="home-preview-svg" viewBox="0 0 320 110" class="sparkline-svg" role="img" aria-label="Sparkline chart showing global temperature anomaly rising from -0.16 degrees Celsius in 1880 to +1.28 degrees Celsius in 2024">
+                  <line class="svg-baseline" x1="0" y1="68" x2="320" y2="68" />
+                  <text class="svg-baseline-text" x="4" y="63">1951–1980 Baseline (0.0°C)</text>
+                  <path id="home-preview-area" class="svg-area" d="" />
+                  <path id="home-preview-line" class="svg-line" d="" />
+                  <circle id="home-preview-dot" class="svg-dot" cx="310" cy="18" r="5" />
+                  <defs>
+                    <linearGradient id="homeGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" class="grad-stop-start" />
+                      <stop offset="100%" class="grad-stop-end" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+
+              <div class="preview-footer">
+                <p class="preview-footer-text text-muted">
+                  <strong>Mapping:</strong> Cooler baseline = low warm tone (~210 Hz). Modern warming = rising pitch (~740 Hz).
+                </p>
+                <button type="button" id="btn-home-audition" class="touch-target btn-audition transition">
+                  <span aria-hidden="true">🔊</span>
+                  <span id="home-audition-label">Hear 5s Sweep</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3-Pillar Feature Highlights -->
+      <div class="features-grid">
+        <article class="feature-card surface-card">
+          <div class="feature-icon feature-icon--sky" aria-hidden="true">🎛️</div>
+          <h2 class="feature-heading">Scientific Fidelity First</h2>
+          <p class="feature-desc text-muted">
+            Zero arbitrary sound effects. Every pitch, stereo pan position, and rhythmic pulse is deterministically computed from verified NASA GISS, NOAA GML, and NSIDC records.
+          </p>
+        </article>
+
+        <article class="feature-card surface-card">
+          <div class="feature-icon feature-icon--emerald" aria-hidden="true">♿</div>
+          <h2 class="feature-heading">Built for Every Sense</h2>
+          <p class="feature-desc text-muted">
+            Includes Spoken Narration mode (Web Speech API), live ARIA transcripts, downloadable text logs, High-Contrast theme, Large Text scaling, and Reduced Motion support.
+          </p>
+        </article>
+
+        <article class="feature-card surface-card">
+          <div class="feature-icon feature-icon--amber" aria-hidden="true">⚖️</div>
+          <h2 class="feature-heading">Hear the Change (A/B)</h2>
+          <p class="feature-desc text-muted">
+            Compare historical baselines against modern decades in stereo (Left vs. Right ear) or listen to two Earth indicators simultaneously to perceive correlations directly.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 2: DATASET SELECTION / EXPLORE PAGE
+         ====================================================================== -->
+    <section id="view-explore" class="view-section hidden view-explore" aria-labelledby="explore-heading">
+      <div class="explore-header">
+        <div>
+          <h1 id="explore-heading" class="explore-heading">Explore Earth Science Datasets</h1>
+          <p class="text-muted explore-desc">Select a planetary vital sign to load its time-series data into the visual &amp; audio player.</p>
+        </div>
+        <span class="explore-count-badge surface-sub">4 Verified Curated Snapshots (through 2025)</span>
+      </div>
+
+      <div id="dataset-cards-grid" class="dataset-grid" role="list">
+        <!-- Populated dynamically via app.js -->
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 3: MAIN VISUALIZATION & SONIFICATION PLAYER
+         ====================================================================== -->
+    <section id="view-player" class="view-section hidden" aria-labelledby="player-heading">
+      <!-- Top Dataset Selector & Listening Mode Bar -->
+      <div class="surface-card player-top-bar">
+        <div class="dataset-selector">
+          <div class="dataset-selector__label-row">
+            <label for="player-dataset-select" class="dataset-label">Active Dataset:</label>
+            <select id="player-dataset-select" class="touch-target dataset-select surface-sub">
+              <!-- Populated dynamically via app.js -->
+            </select>
+          </div>
+          <h1 id="player-heading" class="player-heading">Global Surface Temperature Anomaly (1880–2025)</h1>
+        </div>
+
+        <!-- Listening Mode Selector -->
+        <div class="mode-selector" role="radiogroup" aria-label="Sonification Listening Mode">
+          <span class="mode-label text-muted">Sound Mode:</span>
+          <button type="button" data-mode="orchestra" class="mode-btn touch-target" role="radio" aria-checked="true">
+            🌐 Earth Orchestra (Flagship)
+          </button>
+          <button type="button" data-mode="scientific" class="mode-btn touch-target" role="radio" aria-checked="false">
+            🔬 Scientific (Continuous)
+          </button>
+          <button type="button" data-mode="musical" class="mode-btn touch-target" role="radio" aria-checked="false">
+            🎵 Musical (Lydian Scale)
+          </button>
+          <button type="button" data-mode="accessible" class="mode-btn touch-target" role="radio" aria-checked="false">
+            🗣️ Accessible (Step + Voice)
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Grid: Visualization Canvas (Left 8 cols) + Live Info & Legend (Right 4 cols) -->
+      <div class="player-grid">
+        <!-- Left Column: Animated Chart, Earth Data Orb & Timeline Controls -->
+        <div class="player-left">
+          <div class="player-canvas-card surface-card">
+            <!-- Top Live Metric Banner inside Visualization -->
+            <div class="metric-banner">
+              <div class="metric-banner__left">
+                <div class="metric-year">
+                  <span class="metric-year__label text-muted">Selected Year</span>
+                  <span id="readout-year" class="metric-year__value">1880</span>
+                </div>
+                <div class="metric-divider" aria-hidden="true"></div>
+                <div class="metric-value">
+                  <span id="readout-metric-label" class="metric-value__label text-muted">Temp Anomaly</span>
+                  <span id="readout-value" class="metric-value__number">-0.16 °C</span>
+                </div>
+                <div class="metric-divider metric-divider--sm-hidden" aria-hidden="true"></div>
+                <div class="metric-yoy metric-yoy--sm-only">
+                  <span class="metric-yoy__label text-muted">YoY Change</span>
+                  <span id="readout-yoy" class="metric-yoy__value text-muted">0.00 °C</span>
+                </div>
+              </div>
+
+              <!-- Live Pitch & Stereo Pan Telemetry -->
+              <div class="telemetry-box surface-sub">
+                <div>
+                  <span class="telemetry-label text-muted">Tone Freq</span>
+                  <strong id="readout-freq" class="telemetry-value telemetry-value--emerald">212 Hz</strong>
+                </div>
+                <div class="telemetry-divider" aria-hidden="true"></div>
+                <div>
+                  <span class="telemetry-label text-muted">Stereo Pan</span>
+                  <strong id="readout-pan" class="telemetry-value telemetry-value--sky">0.70 L</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Chart + 3D Earth Data Orb + Live Waveform Grid -->
+            <div class="viz-grid">
+              <!-- Responsive Time-Series Canvas -->
+              <div class="chart-wrap">
+                <canvas id="main-chart-canvas" class="chart-canvas" role="img" aria-label="Interactive animated time-series chart of selected Earth dataset. Click or drag horizontally to scrub year."></canvas>
+                <p class="chart-axis-labels">
+                  <span id="chart-axis-start">1880</span>
+                  <span>Click or drag chart to scrub timeline</span>
+                  <span id="chart-axis-end">2025</span>
+                </p>
+              </div>
+
+              <!-- Right Visual Column: 3D-Style Earth Orb + Live Audio Analyser -->
+              <div class="orb-analyser-col">
+                <!-- 3D-Style Animated Earth Data Orb -->
+                <div class="orb-card">
+                  <div class="orb-header">
+                    <span>Planetary Data Orb</span>
+                    <span id="orb-intensity-label" class="orb-intensity-label">Baseline</span>
+                  </div>
+                  <canvas id="earth-orb-canvas" class="orb-canvas" role="img" aria-label="Animated rotating Earth globe visualization whose thermal aura and atmosphere glow reflect the current data intensity"></canvas>
+                  <span class="orb-caption">Aura color &amp; pulse reflect value</span>
+                </div>
+
+                <!-- Real-Time Web Audio AnalyserNode Spectrum -->
+                <div class="analyser-card">
+                  <div class="analyser-header">
+                    <span>Live Audio Waveform</span>
+                    <span id="audio-engine-status" class="analyser-status">READY</span>
+                  </div>
+                  <canvas id="analyser-canvas" class="analyser-canvas" role="img" aria-label="Real-time Web Audio oscilloscope waveform pulsing in sync with the generated sound"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Timeline Scrubber Slider -->
+            <div class="scrubber-section">
+              <div class="scrubber-label-row">
+                <label for="timeline-scrubber" class="scrubber-label text-muted">Timeline Scrubber (Drag or use Left/Right Arrow keys)</label>
+                <span id="scrubber-progress-text" class="scrubber-progress">Point 1 of 146 (0%)</span>
+              </div>
+              <input id="timeline-scrubber" type="range" min="0" max="145" value="0" step="1" class="jukebox-slider scrubber-input" aria-label="Dataset Timeline Year Scrubber" />
+            </div>
+
+            <!-- Primary Audio Transport & Playback Controls -->
+            <div class="transport-section">
+              <!-- Play / Pause / Stop / Step Buttons -->
+              <div class="transport-btns" role="group" aria-label="Playback Transport Controls">
+                <button id="btn-play-pause" type="button" class="touch-target btn-play transition">
+                  <span id="icon-play-pause" aria-hidden="true">▶</span>
+                  <span id="label-play-pause">Play Sonification</span>
+                </button>
+                <button id="btn-stop" type="button" class="touch-target btn-stop-ctrl surface-sub transition" aria-label="Stop and reset to start year">
+                  <span aria-hidden="true">⏹</span>
+                  <span>Stop</span>
+                </button>
+                <button id="btn-step-back" type="button" class="touch-target btn-step surface-sub transition" aria-label="Step backward one year" title="Previous Year">
+                  ⏮
+                </button>
+                <button id="btn-step-forward" type="button" class="touch-target btn-step surface-sub transition" aria-label="Step forward one year" title="Next Year">
+                  ⏭
+                </button>
+              </div>
+
+              <!-- Speed, Loop, Stereo, Volume & Mute Controls -->
+              <div class="secondary-controls">
+                <div class="speed-wrap">
+                  <label for="select-speed" class="speed-label text-muted">Speed:</label>
+                  <select id="select-speed" class="touch-target speed-select surface-sub" aria-label="Playback Speed">
+                    <option value="0.5">0.5×</option>
+                    <option value="1" selected>1.0×</option>
+                    <option value="1.5">1.5×</option>
+                    <option value="2">2.0×</option>
+                  </select>
+                </div>
+
+                <button id="btn-loop" type="button" class="touch-target btn-ctrl surface-sub transition" aria-pressed="false" title="Toggle Loop Playback">
+                  <span aria-hidden="true">🔁</span>
+                  <span>Loop</span>
+                </button>
+
+                <button id="btn-stereo" type="button" class="touch-target btn-ctrl btn-ctrl--active surface-sub transition" aria-pressed="true" title="Toggle 3D Binaural Spatial Soundstage vs Mono Center">
+                  <span aria-hidden="true">🎧</span>
+                  <span id="label-stereo">3D Spatial Audio</span>
+                </button>
+
+                <button id="btn-mute" type="button" class="touch-target btn-ctrl surface-sub transition" aria-pressed="false" title="Mute or Unmute Master Audio">
+                  <span id="icon-mute" aria-hidden="true">🔊</span>
+                  <span id="label-mute">Mute</span>
+                </button>
+
+                <div class="volume-wrap surface-sub">
+                  <label for="slider-volume" class="volume-label text-muted">Vol</label>
+                  <input id="slider-volume" type="range" min="0" max="100" value="70" class="jukebox-slider volume-slider" aria-label="Master Volume Percentage" />
+                  <span id="label-volume" class="volume-readout">70%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Real-Time Accessible Transcript & Audio Event Log -->
+          <div class="transcript-section surface-card">
+            <div class="transcript-header">
+              <div class="transcript-title">
+                <h2 class="transcript-heading">Live Audio Transcript &amp; Data Narration</h2>
+                <span class="wcag-badge">WCAG Live Region</span>
+              </div>
+              <div class="transcript-controls">
+                <button id="btn-voice-toggle" type="button" class="touch-target btn-ctrl surface-sub transition" aria-pressed="false">
+                  <span aria-hidden="true">🗣️</span>
+                  <span id="label-voice-toggle">Spoken Narration: Off</span>
+                </button>
+                <button id="btn-download-transcript" type="button" class="touch-target btn-ctrl surface-sub transition">
+                  ⬇ Download .TXT
+                </button>
+                <button id="btn-export-wav" type="button" class="touch-target btn-export transition" title="Export CD-Quality 16-bit WAV Audio File of the Earth Orchestra Symphony">
+                  <span aria-hidden="true">🎵</span>
+                  <span id="label-export-wav">Export .WAV</span>
+                </button>
+              </div>
+            </div>
+
+            <div id="live-transcript-box" class="transcript-box" tabindex="0" aria-label="Scrolling real-time sonification transcript">
+              <p class="transcript-ready">[System] Ready. Press Play Sonification (or Spacebar) to hear data values mapped to pitch and stereo field.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Scientific Explanation & Explicit Sonification Legend -->
+        <aside class="player-aside" aria-label="Dataset Information and Sonification Legend">
+          <!-- Sonification Mapping Legend Card -->
+          <div class="legend-card surface-card">
+            <div class="legend-header">
+              <h2 class="legend-title">
+                <span aria-hidden="true">🎼</span> Sonification Legend
+              </h2>
+              <span id="legend-mode-badge" class="legend-badge">Scientific</span>
+            </div>
+            <p id="legend-mode-desc" class="legend-desc text-muted">
+              Continuous sine + warm harmonic oscillator whose frequency glides smoothly in exact proportion to the scientific measurement.
+            </p>
+
+            <dl id="legend-rules-list" class="legend-rules">
+              <div class="legend-rule surface-sub">
+                <dt class="legend-rule__label legend-rule__label--sky">1. Data Value → Pitch (Hz)</dt>
+                <dd id="legend-pitch-rule" class="legend-rule__value">
+                  180 Hz (min value) to 780 Hz (max value). Higher pitch = higher value.
+                </dd>
+              </div>
+              <div class="legend-rule surface-sub">
+                <dt class="legend-rule__label legend-rule__label--emerald">2. Rate of Change → Harmonic Brightness</dt>
+                <dd id="legend-change-rule" class="legend-rule__value">
+                  Larger year-over-year jumps gently boost harmonic overtone clarity and rhythmic pulse emphasis.
+                </dd>
+              </div>
+              <div class="legend-rule surface-sub">
+                <dt class="legend-rule__label legend-rule__label--amber">3. Chronological Time → Stereo Pan</dt>
+                <dd class="legend-rule__value">
+                  Earliest year begins on the Left channel (-0.75) and travels smoothly to the Right channel (+0.75) at 2025.
+                </dd>
+              </div>
+            </dl>
+          </div>
+
+          <!-- Science Context & Source Attribution Card -->
+          <div class="dataset-info-card surface-card">
+            <h2 class="dataset-info-title">
+              <span aria-hidden="true">🛰️</span> About This Dataset
+            </h2>
+            <p id="info-science-summary" class="dataset-info-summary text-muted">
+              NASA's Goddard Institute for Space Studies (GISS) tracks global surface temperature anomalies relative to the 1951–1980 average.
+            </p>
+            <div class="dataset-info-table surface-sub">
+              <div class="dataset-info-row">
+                <span class="text-muted">Data Source:</span>
+                <strong id="info-source-name">NASA GISS GISTEMP v4</strong>
+              </div>
+              <div class="dataset-info-row">
+                <span class="text-muted">Record Span:</span>
+                <strong id="info-date-span" class="dataset-info-mono">1880 – 2025</strong>
+              </div>
+              <div class="dataset-info-row">
+                <span class="text-muted">Min / Max Recorded:</span>
+                <strong id="info-min-max" class="dataset-info-mono">-0.48 °C / +1.28 °C</strong>
+              </div>
+              <div class="dataset-info-row">
+                <span class="text-muted">Data Status:</span>
+                <strong class="dataset-info-status">Verified Static Snapshot</strong>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 4: "HEAR THE CHANGE" A/B COMPARISON STUDIO
+         ====================================================================== -->
+    <section id="view-compare" class="view-section hidden" aria-labelledby="compare-heading">
+      <div class="compare-card surface-card">
+        <div class="compare-header">
+          <div>
+            <span class="compare-label-top">Comparative Sonification Studio</span>
+            <h1 id="compare-heading" class="compare-heading">Hear the Change: Side-by-Side Comparison</h1>
+            <p class="compare-desc text-muted">
+              Compare two historical eras or two distinct planetary indicators simultaneously (panned Left vs. Right) or alternating step-by-step.
+            </p>
+          </div>
+          <div class="compare-play-btns">
+            <button id="btn-compare-play" type="button" class="touch-target btn-play transition">
+              <span id="icon-compare-play" aria-hidden="true">▶</span>
+              <span id="label-compare-play">Play A/B Comparison</span>
+            </button>
+            <button id="btn-compare-stop" type="button" class="touch-target btn-stop-ctrl surface-sub transition">
+              ⏹ Stop
+            </button>
+          </div>
+        </div>
+
+        <!-- Comparison Mode Preset / Custom Selectors -->
+        <div class="compare-selectors">
+          <div class="compare-selector-box surface-sub">
+            <label for="compare-preset-select" class="compare-selector-label compare-selector-label--sky">Comparison Scenario</label>
+            <select id="compare-preset-select" class="touch-target compare-select surface-card">
+              <option value="temp-eras">1. Global Temp: Early Era (1880–1925) vs. Modern (1980–2025)</option>
+              <option value="co2-temp">2. Correlation: Atmospheric CO₂ vs. Global Temp (1959–2025)</option>
+              <option value="ice-sea">3. Cryosphere &amp; Ocean: Arctic Sea Ice vs. Sea Level (1993–2025)</option>
+            </select>
+          </div>
+
+          <div class="compare-selector-box surface-sub">
+            <label for="compare-audio-routing" class="compare-selector-label compare-selector-label--emerald">Audio Routing Mode</label>
+            <select id="compare-audio-routing" class="touch-target compare-select surface-card">
+              <option value="stereo-dual">Dual Stereo (Stream A = Left Ear, Stream B = Right Ear)</option>
+              <option value="alternating">Alternating A → B Pulse (Great for Mono Speakers)</option>
+            </select>
+          </div>
+
+          <div class="compare-selector-box surface-sub compare-selector-box--readout">
+            <span class="compare-selector-label compare-selector-label--amber">Live Divergence Readout</span>
+            <p id="compare-live-readout" class="compare-readout">Press Play A/B Comparison to hear both streams.</p>
+          </div>
+        </div>
+
+        <!-- Dual Synchronized Comparison Canvas -->
+        <div class="compare-canvas-wrap">
+          <div class="compare-legend-row">
+            <div class="stream-label stream-label--a">
+              <span class="stream-dot stream-dot--a" aria-hidden="true"></span>
+              <span id="compare-label-a">Stream A (Left Channel): Early Era 1880–1925</span>
+            </div>
+            <div class="stream-label stream-label--b">
+              <span class="stream-dot stream-dot--b" aria-hidden="true"></span>
+              <span id="compare-label-b">Stream B (Right Channel): Modern Era 1980–2025</span>
+            </div>
+          </div>
+          <canvas id="compare-chart-canvas" class="compare-canvas" role="img" aria-label="Dual overlay comparison chart contrasting Stream A and Stream B"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 5: ABOUT & DATA SOURCES PAGE
+         ====================================================================== -->
+    <section id="view-about" class="view-section hidden" aria-labelledby="about-heading">
+      <div class="about-card surface-card">
+        <div class="about-intro">
+          <span class="about-label">Methodology, Open Science &amp; Attribution</span>
+          <h1 id="about-heading" class="about-heading">About Earth Information Jukebox</h1>
+          <p class="text-muted about-desc">
+            Inspired by NASA's Earth Information Center and NASA Space Apps multi-sensory accessibility initiatives, the Earth Information Jukebox bridges visual data dashboards and auditory data sonification so that climate patterns can be intuitively heard as well as seen.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-box surface-sub">
+            <h2 class="about-box-heading">How Deterministic Sonification Works</h2>
+            <ul class="about-list text-muted">
+              <li><strong>No Randomization:</strong> Every data point is normalized cleanly between its historical minimum and maximum (<code class="font-mono">t ∈ [0, 1]</code>) and mapped directly to audio frequency (<code class="font-mono">180 Hz – 780 Hz</code>).</li>
+              <li><strong>Click-Free Synthesis:</strong> Uses the native Web Audio API (<code class="font-mono">OscillatorNode</code>, <code class="font-mono">GainNode</code>, <code class="font-mono">StereoPannerNode</code>, and <code class="font-mono">AnalyserNode</code>) with exponential frequency glides and smooth ADSR envelopes.</li>
+              <li><strong>Safe Master Limiter:</strong> A <code class="font-mono">DynamicsCompressorNode</code> caps maximum output gain so high values never cause startling loudness.</li>
+            </ul>
+          </div>
+
+          <div class="about-box surface-sub">
+            <h2 class="about-box-heading">Verified Data Sources &amp; Disclaimers</h2>
+            <p class="about-disclaimer">
+              Note: Datasets bundled in this standalone web application are curated static annual snapshots compiled from official NASA and NOAA public records through 2025 (not a live satellite telemetry feed).
+            </p>
+            <ul class="about-list about-list--sm text-muted">
+              <li><strong>Global Surface Temperature (1880–2025):</strong> NASA Goddard Institute for Space Studies (GISS) Surface Temperature Analysis (<code class="font-mono">GISTEMP v4 / GLB.Ts+dSST</code>), °C anomaly vs. 1951–1980 mean.</li>
+              <li><strong>Atmospheric CO₂ (1959–2025):</strong> NOAA Global Monitoring Laboratory (GML) Mauna Loa Observatory annual mean dry-air mole fraction (ppm).</li>
+              <li><strong>Arctic Minimum Sea Ice Extent (1979–2025):</strong> National Snow and Ice Data Center (NSIDC) / NASA Sea Ice Index September minimum extent (million km²).</li>
+              <li><strong>Global Mean Sea Level (1993–2025):</strong> NASA Sea Level Change Team / GSFC satellite altimetry multi-mission record (mm change relative to 1993).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       ACCESSIBLE INTERACTIVE TUTORIAL / ONBOARDING MODAL
+       ======================================================================== -->
+  <div id="tutorial-modal" class="hidden modal-overlay" role="dialog" aria-modal="true" aria-labelledby="tutorial-title">
+    <div class="modal-inner surface-card">
+      <div class="modal-header">
+        <div>
+          <span class="modal-label">Quick Start Guide</span>
+          <h2 id="tutorial-title" class="modal-title">Welcome to Earth Information Jukebox</h2>
+        </div>
+        <button id="btn-close-tutorial-x" type="button" class="touch-target btn-ctrl surface-sub transition" aria-label="Close Tutorial Modal">
+          ✕
+        </button>
+      </div>
+
+      <div class="tutorial-steps">
+        <div class="tutorial-step surface-sub">
+          <span class="tutorial-step__icon" aria-hidden="true">📈</span>
+          <div class="tutorial-step__body">
+            <strong class="tutorial-step__title tutorial-step__title--sky">1. Pitch Represents the Measurement</strong>
+            As temperature, CO₂, or sea level rises, the musical pitch climbs smoothly upward. When Arctic sea ice shrinks, the pitch descends.
+          </div>
+        </div>
+        <div class="tutorial-step surface-sub">
+          <span class="tutorial-step__icon" aria-hidden="true">🎧</span>
+          <div class="tutorial-step__body">
+            <strong class="tutorial-step__title tutorial-step__title--emerald">2. Stereo Position Represents Time</strong>
+            Historical records begin in your <strong>Left ear</strong> and travel across to your <strong>Right ear</strong> as time approaches 2025.
+          </div>
+        </div>
+        <div class="tutorial-step surface-sub">
+          <span class="tutorial-step__icon" aria-hidden="true">🗣️</span>
+          <div class="tutorial-step__body">
+            <strong class="tutorial-step__title tutorial-step__title--amber">3. Accessible Modes &amp; Keyboard Shortcuts</strong>
+            Switch to <em>Accessible (Step + Voice)</em> mode for spoken year/value readouts, or press <kbd class="surface-card">Space</kbd> anytime to Play/Pause.
+          </div>
+        </div>
+        <div class="tutorial-step surface-sub">
+          <span class="tutorial-step__icon" aria-hidden="true">🌐</span>
+          <div class="tutorial-step__body">
+            <strong class="tutorial-step__title tutorial-step__title--emerald">4. Flagship Earth Orchestra</strong>
+            Hear all 4 Earth systems interact simultaneously: warm Lead melody (Temperature), slow atmospheric pad (CO₂), fading glass crystal shimmer (Sea Ice), deep bass drone (Sea Level), and rapid change acceleration.
+          </div>
+        </div>
+      </div>
+
+      <div class="tutorial-footer">
+        <button id="btn-tutorial-sound-demo" type="button" class="touch-target btn-cta-orchestra transition">
+          <span aria-hidden="true">🎵</span>
+          <span>Test Rising Tone Demo</span>
+        </button>
+        <button id="btn-close-tutorial-start" type="button" class="touch-target btn-cta-play transition">
+          Start Exploring
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       FOOTER
+       ======================================================================== -->
+  <footer class="surface-card site-footer">
+    <div class="footer-inner">
+      <p>
+        <strong>Earth Information Jukebox</strong> · Open Science Data Sonification Prototype · Data citations: NASA GISS, NOAA GML, NSIDC, NASA Sea Level Change Team.
+      </p>
+      <p class="footer-wcag">WCAG 2.1 AA+ Accessible · Web Audio API Synthesizer</p>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       EARTH JUKEBOX AI ASSISTANT CHATBOT
+       ======================================================================== -->
+  <!-- Floating Chat Toggle Button -->
+  <button id="chatbot-toggle" type="button" class="chatbot-toggle-btn" aria-label="Open Earth Jukebox AI Assistant" title="Ask the Earth Jukebox AI Assistant">
+    <span class="chatbot-toggle-icon" aria-hidden="true">🌍</span>
+    <span class="chatbot-toggle-pulse" aria-hidden="true"></span>
+  </button>
+
+  <!-- Chat Panel -->
+  <div id="chatbot-panel" class="chatbot-panel hidden" role="dialog" aria-modal="false" aria-labelledby="chatbot-title">
+    <div class="chatbot-header">
+      <div class="chatbot-header-left">
+        <span class="chatbot-avatar" aria-hidden="true">🌍</span>
+        <div>
+          <h2 id="chatbot-title" class="chatbot-title">Earth AI Assistant</h2>
+          <span class="chatbot-subtitle">NASA Data · Climate Science · Navigation</span>
+        </div>
+      </div>
+      <div class="chatbot-header-actions">
+        <button id="chatbot-speak-toggle" type="button" class="chatbot-header-btn touch-target" aria-label="Toggle voice responses" title="Toggle Voice Responses" aria-pressed="false">
+          <span aria-hidden="true">🗣️</span>
+        </button>
+        <button id="chatbot-close" type="button" class="chatbot-close-btn touch-target" aria-label="Close chat assistant">✕</button>
+      </div>
+    </div>
+
+    <div id="chatbot-messages" class="chatbot-messages" tabindex="0" aria-label="Chat conversation" aria-live="polite">
+      <div class="chatbot-msg chatbot-msg--bot">
+        <span class="chatbot-msg-avatar" aria-hidden="true">🌍</span>
+        <div class="chatbot-msg-bubble">
+          <p>Welcome to the <strong>Earth Information Jukebox AI Assistant!</strong></p>
+          <p class="chatbot-msg-hint">I can help you with:</p>
+          <ul class="chatbot-msg-list">
+            <li>⚖️ <strong>Judge Targeted Contents:</strong> Ask me to evaluate any year (e.g., <em>"Judge 2024"</em>), evaluate the warming trend, or judge what is currently playing!</li>
+            <li>🧭 <strong>Jump Anywhere:</strong> Say <em>"Jump to chart"</em>, <em>"Show globe"</em>, <em>"Jump to compare"</em>, or <em>"Go to explore"</em>.</li>
+            <li>🎛️ <strong>Control the Webpage:</strong> Say <em>"Play orchestra"</em>, <em>"Light mode"</em>, <em>"High contrast"</em>, or <em>"Mute"</em>.</li>
+            <li>📊 <strong>Deep NASA Database:</strong> Query verified records on Temperature, CO₂, Sea Ice, and Sea Level.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Action Chips -->
+    <div class="chatbot-chips" role="group" aria-label="Quick questions">
+      <button type="button" class="chatbot-chip" data-query="Judge year 2024">⚖️ Judge 2024</button>
+      <button type="button" class="chatbot-chip" data-query="Judge what is currently playing">🔍 Judge Current</button>
+      <button type="button" class="chatbot-chip" data-query="Jump to main chart">📈 Jump to Chart</button>
+      <button type="button" class="chatbot-chip" data-query="Jump to Earth orb globe">🌐 Jump to Orb</button>
+      <button type="button" class="chatbot-chip" data-query="Play the Earth Orchestra">▶ Play</button>
+      <button type="button" class="chatbot-chip" data-query="Compare datasets side by side">⚖️ Compare (A/B)</button>
+    </div>
+
+    <form id="chatbot-form" class="chatbot-input-area" autocomplete="off">
+      <input id="chatbot-input" type="text" class="chatbot-input" placeholder="Ask about Earth data or say where to go..." aria-label="Type your question" />
+      <button type="submit" class="chatbot-send-btn touch-target" aria-label="Send message">
+        <span aria-hidden="true">➤</span>
+      </button>
+    </form>
+  </div>
+
+  <!-- External Application Script -->
+  <script src="app.js?v=3"></script>
+</body>
+</html>
